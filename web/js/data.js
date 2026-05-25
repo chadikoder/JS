@@ -722,6 +722,102 @@ const GIO = [
     ]}],
     quiz:[{q:"Set autorise les doublons ?",opts:["Oui","Non","Selon","Option"],correct:"b",
       expl:"Valeurs uniques."}]
+  },
+  {id:"w3-strings",code:"B7",level:"basic",title:"JS Strings",sub:"length, methods, template literals",tags:["strings","basics"],
+    sections:[{h:"Methods essentielles",blocks:[
+      {code:"const s = 'Hello World';\n\ns.length;                    // 11\ns.toUpperCase();             // 'HELLO WORLD'\ns.toLowerCase();             // 'hello world'\ns.trim();                    // enleve espaces debut/fin\ns.trimStart();\ns.trimEnd();\ns.indexOf('o');              // 4\ns.lastIndexOf('o');          // 7\ns.includes('World');         // true\ns.startsWith('Hello');       // true\ns.endsWith('!');             // false\ns.slice(0, 5);               // 'Hello'\ns.substring(6);              // 'World'\ns.replace('World', 'JS');    // 'Hello JS'\ns.replaceAll('o', '0');      // 'Hell0 W0rld'\ns.split(' ');                // ['Hello', 'World']\ns.repeat(3);                 // 'Hello WorldHello World...'\ns.padStart(15, '*');         // '****Hello World'\ns.padEnd(15, '*');           // 'Hello World****'\ns.at(-1);                    // 'd' (negative index OK)\n\n// Template literals\nconst name = 'Alice';\n`Bonjour ${name}`;            // 'Bonjour Alice'"}
+    ]}],
+    quiz:[{q:"<code>'hello'.at(-1)</code> :",opts:["Erreur","'o'","'h'","-1"],correct:"b",
+      expl:"<code>at()</code> accepte negatif (depuis ES2022)."}]
+  },
+  {id:"w3-numbers",code:"B8",level:"basic",title:"JS Numbers & Math",sub:"Number, Math, parseInt, NaN",tags:["numbers","math","basics"],
+    sections:[{h:"Number methods",blocks:[
+      {code:"(42).toString();        // '42'\n(42).toString(2);        // '101010' (binaire)\n(255).toString(16);      // 'ff' (hex)\n(3.14159).toFixed(2);    // '3.14'\n(1234.5).toLocaleString('fr-FR');  // '1 234,5'\n\n// Tests\nNumber.isInteger(42);    // true\nNumber.isFinite(Infinity); // false\nNumber.isNaN(NaN);       // true (vs isNaN global qui converti)\nNumber.MAX_SAFE_INTEGER; // 2^53 - 1\n\n// Parsing\nparseInt('42abc');       // 42\nparseInt('0xff', 16);    // 255\nparseFloat('3.14abc');   // 3.14\nNumber('42');            // 42\n+'42';                   // 42 (raccourci)"},
+      {code:"// Math\nMath.PI;                 // 3.14159...\nMath.E;\nMath.abs(-5);            // 5\nMath.round(4.5);         // 5\nMath.floor(4.9);         // 4\nMath.ceil(4.1);          // 5\nMath.trunc(4.9);         // 4 (sans arrondi)\nMath.sign(-5);           // -1 (signe)\nMath.min(1, 2, 3);       // 1\nMath.max(1, 2, 3);       // 3\nMath.sqrt(16);           // 4\nMath.pow(2, 10);         // 1024 (ou 2 ** 10)\nMath.random();           // 0 a 1\n\n// Random entre 0 et 99\nMath.floor(Math.random() * 100);"}
+    ]}],
+    quiz:[{q:"Random entre 0 et 9 inclusif :",opts:["<code>Math.random() * 10</code>","<code>Math.floor(Math.random() * 10)</code>","<code>Math.round(Math.random() * 9)</code>","<code>Math.random(9)</code>"],correct:"b",
+      expl:"<code>floor(random * 10)</code> donne 0-9 entiers."}]
+  },
+  {id:"w3-date",code:"B9",level:"basic",title:"JS Date",sub:"new Date, getDate, format",tags:["date","basics"],
+    sections:[{h:"Date moderne",blocks:[
+      {code:"const now = new Date();\n\n// Get\nnow.getFullYear();       // 2026\nnow.getMonth();          // 0-11 ! (Jan = 0)\nnow.getDate();           // 1-31\nnow.getDay();            // 0-6 (Sun = 0)\nnow.getHours();\nnow.getMinutes();\nnow.getSeconds();\nnow.getTime();           // ms depuis 1970\n\n// Set\nnow.setFullYear(2027);\nnow.setMonth(11);        // decembre\n\n// Construire\nnew Date(2026, 4, 25);   // 25 mai 2026 (mois = 4 !)\nnew Date('2026-05-25');\nnew Date('2026-05-25T14:30:00');\nDate.now();              // timestamp ms\n\n// Format moderne\nnow.toISOString();       // '2026-05-25T14:30:00.000Z'\nnow.toLocaleDateString('fr-FR');     // '25/05/2026'\nnow.toLocaleString('fr-FR', {\n  dateStyle: 'full',\n  timeStyle: 'short'\n});\n// 'lundi 25 mai 2026 a 14:30'\n\n// Diff entre dates\nconst diffMs = date2 - date1;\nconst diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));"},
+      {warn:"<code>getMonth()</code> retourne 0-11 ! Janvier = 0, decembre = 11. Source de bugs."}
+    ]}],
+    quiz:[{q:"<code>new Date(2026, 0, 1)</code> :",opts:["1 jan 2026","1 fev 2026","Erreur","1 dec 2026"],correct:"a",
+      expl:"Mois 0 = janvier (0-indexe)."}]
+  },
+  {id:"w3-regex",code:"B10",level:"basic",title:"JS RegExp",sub:"Pattern matching",tags:["regex","basics"],
+    sections:[{h:"Regex en JS",blocks:[
+      {code:"// 2 syntaxes\nconst r1 = /^abc$/;\nconst r2 = new RegExp('^abc$');\n\n// Flags\n/abc/i        // insensible casse\n/abc/g        // global (toutes occurrences)\n/abc/m        // multiline\n/abc/s        // dot matches newline\n/abc/u        // unicode\n\n// Tester\n/^[a-z]+$/.test('hello');   // true\n\n// Matcher\n'phone: 0612345678'.match(/\\d+/);  // ['0612345678']\n'1-2-3'.match(/\\d/g);              // ['1', '2', '3']\n\n// Capture groups\nconst m = 'John 1990'.match(/(\\w+)\\s+(\\d+)/);\n// m[0] = full, m[1] = 'John', m[2] = '1990'\n\n// Named groups\nconst { groups } = 'John 1990'.match(/(?<name>\\w+)\\s+(?<year>\\d+)/);\ngroups.name;   // 'John'\ngroups.year;   // '1990'\n\n// Replace\n'hello world'.replace(/world/, 'JS');\n'a-b-c'.replace(/-/g, '_');\n'JOHN'.replace(/(\\w)(\\w+)/, (_, first, rest) =>\n  first + rest.toLowerCase());"},
+      {table:[
+        ["Pattern","Sens"],
+        ["<code>.</code>","N'importe quel char (sauf newline)"],
+        ["<code>\\d</code>","Chiffre [0-9]"],
+        ["<code>\\w</code>","Alphanumeric + _"],
+        ["<code>\\s</code>","Espace"],
+        ["<code>^</code> / <code>$</code>","Debut / fin"],
+        ["<code>*</code>","0 ou plus"],
+        ["<code>+</code>","1 ou plus"],
+        ["<code>?</code>","0 ou 1"],
+        ["<code>{n,m}</code>","entre n et m"],
+        ["<code>(...)</code>","Groupe de capture"],
+        ["<code>[abc]</code>","Un des chars"]
+      ]}
+    ]}],
+    quiz:[{q:"Flag pour insensible casse :",opts:["c","i","u","s"],correct:"b",
+      expl:"<code>/abc/i</code>"}]
+  },
+  {id:"w3-errors",code:"I7",level:"intermediate",title:"JS Errors",sub:"try/catch/finally, custom errors",tags:["errors","intermediate"],
+    sections:[{h:"Gestion d'erreurs",blocks:[
+      {code:"// try/catch/finally\ntry {\n  riskyOperation();\n} catch (err) {\n  console.error(err.message);\n  console.error(err.stack);\n} finally {\n  cleanup();   // toujours execute\n}\n\n// Throw\nthrow new Error('Quelque chose a casse');\nthrow new TypeError('Mauvais type');\nthrow new RangeError('Hors limite');\n\n// Custom error\nclass ValidationError extends Error {\n  constructor(message, field) {\n    super(message);\n    this.name = 'ValidationError';\n    this.field = field;\n  }\n}\n\ntry {\n  if (!email) throw new ValidationError('Email manquant', 'email');\n} catch (e) {\n  if (e instanceof ValidationError) {\n    console.log('Champ:', e.field);\n  } else {\n    throw e;   // re-throw inconnu\n  }\n}\n\n// Cause (ES2022)\ntry { fetch('...') }\ncatch (orig) {\n  throw new Error('Load failed', { cause: orig });\n}"}
+    ]}],
+    quiz:[{q:"<code>finally</code> :",opts:["Si erreur uniquement","Si pas d'erreur","TOUJOURS","Jamais"],correct:"c",
+      expl:"Execute toujours, erreur ou pas."}]
+  },
+  {id:"w3-storage",code:"I8",level:"intermediate",title:"JS Web Storage",sub:"localStorage, sessionStorage",tags:["storage","intermediate"],
+    sections:[{h:"Stockage cote client",blocks:[
+      {code:"// Persistant\nlocalStorage.setItem('theme', 'dark');\nconst theme = localStorage.getItem('theme');\nlocalStorage.removeItem('theme');\nlocalStorage.clear();\nlocalStorage.length;\nlocalStorage.key(0);\n\n// Session only\nsessionStorage.setItem('search', 'php');\n\n// Stocker objet (JSON obligatoire)\nlocalStorage.setItem('user', JSON.stringify(user));\nconst user = JSON.parse(localStorage.getItem('user') || '{}');\n\n// Helper safe\nfunction safeGet(key, fallback = null) {\n  try {\n    const v = localStorage.getItem(key);\n    return v ? JSON.parse(v) : fallback;\n  } catch {\n    return fallback;\n  }\n}\n\n// Listener cross-tab\nwindow.addEventListener('storage', (e) => {\n  if (e.key === 'theme') applyTheme(e.newValue);\n});"},
+      {warn:"~5MB max. Pas de chiffrement. Pas pour les secrets."}
+    ]}],
+    quiz:[{q:"Diff localStorage / sessionStorage :",opts:["Aucune","local persistant, session = onglet","Inverse","local + chiffre"],correct:"b",
+      expl:"sessionStorage = vide a la fermeture de l'onglet."}]
+  },
+  {id:"w3-cookies",code:"I9",level:"intermediate",title:"JS Cookies",sub:"document.cookie",tags:["cookies","intermediate"],
+    sections:[{h:"Cookies en JS",blocks:[
+      {code:"// Set\ndocument.cookie = 'name=John; max-age=86400; path=/; SameSite=Lax';\n\n// Get (string contenant TOUS les cookies)\nconsole.log(document.cookie);\n// 'name=John; theme=dark'\n\n// Parser\nfunction getCookie(name) {\n  const match = document.cookie.match(\n    new RegExp('(?:^|; )' + name + '=([^;]*)')\n  );\n  return match ? decodeURIComponent(match[1]) : null;\n}\n\n// Delete (set expire dans le passe)\ndocument.cookie = 'name=; max-age=0; path=/';\n\n// Flags importants\n// Secure       : HTTPS seulement\n// HttpOnly     : pas accessible JS (cote serveur seulement)\n// SameSite     : Lax / Strict / None\n// max-age      : duree en secondes\n// expires      : date GMT"},
+      {tip:"En 2026, prefere localStorage pour les preferences client. Cookies = pour les sessions cote serveur (avec HttpOnly)."}
+    ]}],
+    quiz:[{q:"<code>document.cookie</code> retourne :",opts:["Tableau","Objet","String avec tous","Le dernier"],correct:"c",
+      expl:"String contenant tous les cookies, separes par '; '."}]
+  },
+  {id:"w3-iterables",code:"I10",level:"intermediate",title:"JS Iterables & Generators",sub:"Symbol.iterator, yield",tags:["iterables","generators","intermediate"],
+    sections:[{h:"Iterables custom",blocks:[
+      {code:"// Tout iterable a un [Symbol.iterator]\nconst arr = [1, 2, 3];\nconst it = arr[Symbol.iterator]();\nit.next();  // { value: 1, done: false }\nit.next();  // { value: 2, done: false }\nit.next();  // { value: 3, done: false }\nit.next();  // { value: undefined, done: true }\n\n// Custom iterable\nconst range = {\n  from: 1,\n  to: 5,\n  [Symbol.iterator]() {\n    let i = this.from;\n    return {\n      next: () => i <= this.to\n        ? { value: i++, done: false }\n        : { value: undefined, done: true }\n    };\n  }\n};\nfor (const n of range) console.log(n);  // 1, 2, 3, 4, 5\n\n// Generator (plus simple)\nfunction* genRange(start, end) {\n  for (let i = start; i <= end; i++) yield i;\n}\n[...genRange(1, 5)];   // [1, 2, 3, 4, 5]\n\n// Generator infini\nfunction* ids() {\n  let i = 1;\n  while (true) yield i++;\n}"}
+    ]}],
+    quiz:[{q:"<code>function*</code> :",opts:["Erreur","Generator","Async","Multiplication"],correct:"b",
+      expl:"function* = generator."}]
+  },
+  {id:"w3-bom",code:"A5",level:"advanced",title:"JS Window & BOM",sub:"window, location, history",tags:["window","BOM","advanced"],
+    sections:[{h:"Browser Object Model",blocks:[
+      {code:"// window est le global\nwindow.innerWidth;\nwindow.innerHeight;\nwindow.scrollY;\nwindow.scrollTo({ top: 0, behavior: 'smooth' });\n\n// Location\nlocation.href;            // URL complete\nlocation.pathname;        // '/blog/article'\nlocation.search;          // '?id=42'\nlocation.hash;            // '#section'\nlocation.host;            // 'site.fr:8080'\nlocation.protocol;        // 'https:'\nlocation.assign('/new');  // navigue\nlocation.reload();\nlocation.replace('/x');   // sans historique\n\n// History API (SPA)\nhistory.pushState({}, '', '/new-url');\nhistory.replaceState({}, '', '/x');\nhistory.back();\nhistory.forward();\nwindow.addEventListener('popstate', (e) => {\n  // back/forward presse\n});\n\n// URL parsing\nconst u = new URL('https://site.fr/path?id=42#sec');\nu.pathname;     // '/path'\nu.searchParams.get('id');   // '42'\nu.searchParams.set('q', 'php');"}
+    ]}],
+    quiz:[{q:"Pour parser une URL :",opts:["new URL(str)","location.parse(str)","String.parseUrl","JSON.parse"],correct:"a",
+      expl:"<code>new URL(str)</code> parse et expose pathname/search/hash."}]
+  },
+  {id:"w3-web-apis",code:"A6",level:"advanced",title:"JS Web APIs",sub:"Geolocation, Notification, Clipboard",tags:["apis","advanced"],
+    sections:[{h:"APIs natives utiles",blocks:[
+      {code:"// Geolocation\nnavigator.geolocation.getCurrentPosition(\n  (pos) => console.log(pos.coords.latitude, pos.coords.longitude),\n  (err) => console.error(err)\n);\n\n// Notifications\nif ('Notification' in window) {\n  await Notification.requestPermission();\n  new Notification('Hello!', { body: 'Texte', icon: '/icon.png' });\n}\n\n// Clipboard\nawait navigator.clipboard.writeText('Hello');\nconst text = await navigator.clipboard.readText();\n\n// Share (mobile)\nif (navigator.share) {\n  await navigator.share({\n    title: 'Mon site',\n    text: 'Regarde ca',\n    url: location.href\n  });\n}\n\n// Intersection Observer (lazy load, scroll spy)\nconst io = new IntersectionObserver((entries) => {\n  entries.forEach(e => {\n    if (e.isIntersecting) e.target.classList.add('visible');\n  });\n});\ndocument.querySelectorAll('.fade-in').forEach(el => io.observe(el));"}
+    ]}],
+    quiz:[{q:"Pour detecter element visible au scroll :",opts:["addEventListener('scroll')","IntersectionObserver","Element.visible","getBoundingClientRect en boucle"],correct:"b",
+      expl:"IntersectionObserver = API moderne, performante."}]
+  },
+  {id:"w3-strict",code:"A7",level:"advanced",title:"JS Strict Mode & Best Practices",sub:"'use strict', modules",tags:["strict","best-practices","advanced"],
+    sections:[{h:"Strict mode",blocks:[
+      {code:"// En haut d'un fichier\n'use strict';\n\n// Ou en haut d'une fonction\nfunction strict() {\n  'use strict';\n  // ...\n}\n\n// AUTO activates en :\n// - Modules ES (import/export)\n// - Classes\n// - <script type=\"module\">\n\n// Ce que strict mode change :\n// 1. Variables non declarees lancent ReferenceError\nx = 5;  // ❌ en strict\n\n// 2. this dans fonctions normales = undefined (pas window)\nfunction f() { console.log(this); }\nf();  // undefined en strict, window sinon\n\n// 3. Suppression interdite\ndelete Object.prototype;  // ❌ en strict\n\n// 4. Octals interdits\nconst n = 0123;  // ❌ en strict (mais 0o123 OK)"},
+      {tip:"En 2026, tout le monde utilise des modules ES, donc strict est partout par defaut."}
+    ]}],
+    quiz:[{q:"Strict mode auto dans :",opts:["Toutes fonctions","Modules ES + classes","Que script type=text/javascript","Jamais"],correct:"b",
+      expl:"Modules ES et classes sont strict par defaut."}]
   }
 ];
 
