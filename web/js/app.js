@@ -5,46 +5,27 @@ let exFilter = "all";
 
 const W3_URLS = {
   "w3-intro": "https://www.w3schools.com/js/js_intro.asp",
-  "w3-syntax": "https://www.w3schools.com/js/js_syntax.asp",
+  "w3-where": "https://www.w3schools.com/js/js_whereto.asp",
+  "w3-output": "https://www.w3schools.com/js/js_output.asp",
   "w3-variables": "https://www.w3schools.com/js/js_variables.asp",
-  "w3-echo": "https://www.w3schools.com/js/js_echo_print.asp",
-  "w3-types": "https://www.w3schools.com/js/js_datatypes.asp",
-  "w3-strings": "https://www.w3schools.com/js/js_string.asp",
-  "w3-numbers": "https://www.w3schools.com/js/js_numbers.asp",
-  "w3-constants": "https://www.w3schools.com/js/js_constants.asp",
   "w3-operators": "https://www.w3schools.com/js/js_operators.asp",
-  "w3-if": "https://www.w3schools.com/js/js_if_else.asp",
-  "w3-loops": "https://www.w3schools.com/js/js_looping.asp",
-  "w3-functions-basic": "https://www.w3schools.com/js/js_functions.asp",
-  "w3-arrays-basic": "https://www.w3schools.com/js/js_arrays.asp",
-  "w3-superglobals": "https://www.w3schools.com/js/js_superglobals.asp",
-  "w3-forms": "https://www.w3schools.com/js/js_forms.asp",
-  "w3-validation": "https://www.w3schools.com/js/js_form_validation.asp",
-  "w3-regex": "https://www.w3schools.com/js/js_regex.asp",
-  "w3-date": "https://www.w3schools.com/js/js_date.asp",
-  "w3-include": "https://www.w3schools.com/js/js_includes.asp",
-  "w3-file": "https://www.w3schools.com/js/js_file_open.asp",
-  "w3-upload": "https://www.w3schools.com/js/js_file_upload.asp",
-  "w3-cookies": "https://www.w3schools.com/js/js_cookies.asp",
-  "w3-sessions": "https://www.w3schools.com/js/js_sessions.asp",
-  "w3-json": "https://www.w3schools.com/js/js_json.asp",
-  "w3-oop": "https://www.w3schools.com/js/js_oop_what_is.asp",
-  "w3-constructor": "https://www.w3schools.com/js/js_oop_classes_objects.asp",
-  "w3-modifiers": "https://www.w3schools.com/js/js_oop_access_modifiers.asp",
-  "w3-inheritance": "https://www.w3schools.com/js/js_oop_inheritance.asp",
-  "w3-abstract": "https://www.w3schools.com/js/js_oop_classes_abstract.asp",
-  "w3-interfaces": "https://www.w3schools.com/js/js_oop_interfaces.asp",
-  "w3-static": "https://www.w3schools.com/js/js_oop_static_methods.asp",
-  "w3-exceptions": "https://www.w3schools.com/js/js_exception.asp",
-  "w3-mysql": "https://www.w3schools.com/js/js_mysql_intro.asp",
-  "w3-traits": "https://www.w3schools.com/js/js_oop_traits.asp",
-  "day-1": "https://www.w3schools.com/js/js_syntax.asp",
-  "day-2": "https://www.w3schools.com/js/js_functions.asp",
-  "day-3": "https://www.w3schools.com/js/js_form_validation.asp",
-  "day-4": "https://www.w3schools.com/js/js_sessions.asp",
-  "day-5": "https://www.w3schools.com/js/js_mysql_intro.asp",
-  "day-6": "https://www.w3schools.com/js/js_file_upload.asp",
-  "day-7": "https://www.w3schools.com/js/js_oop_what_is.asp",
+  "w3-data-types": "https://www.w3schools.com/js/js_datatypes.asp",
+  "w3-functions": "https://www.w3schools.com/js/js_functions.asp",
+  "w3-arrow": "https://www.w3schools.com/js/js_arrow_function.asp",
+  "w3-arrays": "https://www.w3schools.com/js/js_arrays.asp",
+  "w3-objects": "https://www.w3schools.com/js/js_objects.asp",
+  "w3-dom": "https://www.w3schools.com/js/js_htmldom.asp",
+  "w3-events": "https://www.w3schools.com/js/js_events.asp",
+  "w3-async": "https://www.w3schools.com/js/js_async.asp",
+  "w3-modules": "https://www.w3schools.com/js/js_modules.asp",
+  "w3-classes": "https://www.w3schools.com/js/js_classes.asp",
+  "day-1": "https://www.w3schools.com/js/js_variables.asp",
+  "day-2": "https://www.w3schools.com/js/js_operators.asp",
+  "day-3": "https://www.w3schools.com/js/js_functions.asp",
+  "day-4": "https://www.w3schools.com/js/js_arrays.asp",
+  "day-5": "https://www.w3schools.com/js/js_htmldom.asp",
+  "day-6": "https://www.w3schools.com/js/js_async.asp",
+  "day-7": "https://www.w3schools.com/js/js_classes.asp"
 };
 
 function loadState() {
@@ -75,14 +56,18 @@ function highlightPhp(code) {
     stash.push(`<span class="${cls}">${text}</span>`);
     return `__SAWAHOLD${i}HOLD__`;
   };
-  s = s.replace(/("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/g, m => hold("str", m));
-  s = s.replace(/(\/\/[^\n]*|\/\*[\s\S]*?\*\/|#[^\n]*)/g, m => hold("com", m));
-  s = s.replace(/\b(function|return|if|else|elseif|while|for|foreach|as|switch|case|default|break|continue|do|class|new|public|private|protected|static|const|use|namespace|require|require_once|include|include_once|echo|print|die|exit|true|false|null|self|parent|instanceof|extends|implements|interface|trait|try|catch|finally|throw|fn|match|declare|global|and|or|xor)\b/g, '<span class="kw">$1</span>');
-  s = s.replace(/(\$\w+)/g, '<span class="var">$1</span>');
+  // Strings (incl. template literals)
+  s = s.replace(/(`(?:[^`\]|\.)*`|"(?:[^"\]|\.)*"|'(?:[^'\]|\.)*')/g, m => hold("str", m));
+  // Comments
+  s = s.replace(/(\/\/[^\n]*|\/\*[\s\S]*?\*\/)/g, m => hold("com", m));
+  // Keywords
+  s = s.replace(/\b(const|let|var|function|return|if|else|while|for|of|in|switch|case|default|break|continue|do|class|new|extends|super|this|static|async|await|try|catch|finally|throw|typeof|instanceof|import|export|from|as|delete|null|undefined|true|false)\b/g, '<span class="kw">$1</span>');
+  // Numbers
   s = s.replace(/\b(\d+(?:\.\d+)?)\b/g, '<span class="num">$1</span>');
-  s = s.replace(/\b([a-z_][a-z0-9_]*)\s*\(/gi, '<span class="fn">$1</span>(');
-  s = s.replace(/(?:&lt;\?php|\?&gt;)/g, '<span class="kw">$&</span>');
-  s = s.replace(/(-&gt;|=&gt;|::)/g, '<span class="op">$&</span>');
+  // Function calls
+  s = s.replace(/\b([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\(/g, '<span class="fn">$1</span>(');
+  // Arrow operator
+  s = s.replace(/(=&gt;)/g, '<span class="op">$&</span>');
   return s.replace(/__SAWAHOLD(\d+)HOLD__/g, (_, i) => stash[+i] ?? "");
 }
 
